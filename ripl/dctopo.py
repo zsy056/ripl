@@ -143,7 +143,17 @@ class StructuredTopo(Topo):
         @return names list of names
         '''
         layer = self.layer(name) - 1
-        nodes = [n for n in self.g[name] if self.layer(n) == layer]
+        #nodes = [n for n in self.g[name] if self.layer(n) == layer]
+        nodes = []
+        # In stock mininet, self.g is a directed graph
+        for src_name in self.g.nodes():
+            if src_name == name:
+                nodes.extend([n for n in self.g[src_name] if self.layer(n) ==
+                              layer])
+            else:
+                for dst_name in self.g[src_name]:
+                    if dst_name == name and self.layer(src_name) == layer:
+                        nodes.append(src_name)
         return nodes
 
     def down_nodes(self, name):
@@ -153,7 +163,18 @@ class StructuredTopo(Topo):
         @return names list of names
         '''
         layer = self.layer(name) + 1
-        nodes = [n for n in self.g[name] if self.layer(n) == layer]
+        #nodes = [n for n in self.g[name] if self.layer(n) == layer]
+        nodes = []
+        # In stock mininet, self.g is a directed graph 
+        for src_name in self.g.nodes():
+            if src_name == name:
+                nodes.extend([n for n in self.g[src_name] if self.layer(n) ==
+                              layer]) 
+            else:
+                for dst_name in self.g[src_name]:
+                    if dst_name == name and self.layer(src_name) == layer:
+                        nodes.append(src_name)
+
         return nodes
 
     def up_edges(self, name):
