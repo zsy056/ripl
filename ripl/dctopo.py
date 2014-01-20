@@ -136,7 +136,7 @@ class StructuredTopo(Topo):
         return nodes
 
     def up_nodes(self, name):
-        '''Return edges one layer higher (closer to core).
+        '''Return nodes one layer higher (closer to core).
 
         @param name name
 
@@ -147,7 +147,7 @@ class StructuredTopo(Topo):
         return nodes
 
     def down_nodes(self, name):
-        '''Return edges one layer higher (closer to hosts).
+        '''Return nodes one layer lower (closer to hosts).
 
         @param name name
         @return names list of names
